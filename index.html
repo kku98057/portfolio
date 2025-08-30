@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Romanesco&display=swap"
+    rel="stylesheet">
+  <script src="https://kit.fontawesome.com/771f569fc7.js" crossorigin="anonymous"></script>
+
+  <title>Vite App</title>
+
+</head>
+
+<body class="">
+  <div class="wrap">
+
+    <header>
+      <div></div>
+      <div class="menu">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </header>
+    <main>
+      <section class="hero" id="hero">
+        <div class="container">
+          <div class="title">
+            <h1 class="romanesco-regular">
+              Portfolio
+            </h1>
+            <p class="sub_title">FrontEnd Developer</p>
+            <div class="hero_menu_wrap" id="hero_menu_wrap">
+              <ul class="hero_menu" id="hero_menu">
+
+                <li data-menu-size="100"><a href="#introduce" data-menu="자기소개"><i class="fa-regular fa-user"></i></a>
+                </li>
+                <li data-menu-size="100"><a href="" data-menu="프로젝트"><i class="fa-solid fa-code"></i></a></li>
+                <li data-menu-size="100"><a href="" data-menu="기술스택"><i class="fa-brands fa-stack-overflow"></i></a>
+                </li>
+
+                <li data-menu-size="100"><a href="" data-menu="연락처"><i class="fa-regular fa-address-card"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </section>
+      <section class="project" id="project">
+        <div class="container">
+          <div class="title">
+            <h2 class="orbitron-500">Project</h2>
+          </div>
+          <div class="content">
+            <ul class="project_list">
+              <li>
+
+                <div class="project_data">
+                  <h3>앱테크 줍줍</h3>
+                  <ul class="project_data-skills">
+                    <li>React</li>
+                    <li>TypeScript</li>
+                  </ul>
+                  <div class="project_data-buttons">
+                    <a href="" role="button">View Project</a>
+                  </div>
+                </div>
+                <div class="project_image">
+                  <img src="/images/joopjoop.jpg" alt="">
+                </div>
+              </li>
+              <li>
+                <div class="project_image">
+                  <img src="/images/issuetown.jpg" alt="">
+                </div>
+                <div class="project_data">
+                  <h3>이슈타운</h3>
+                  <ul class="project_data-skills">
+                    <li>React</li>
+                    <li>TypeScript</li>
+                  </ul>
+                  <div class="project_data-buttons">
+                    <a href="" role="button">View Project</a>
+                  </div>
+                </div>
+              </li>
+
+            </ul>
+
+          </div>
+        </div>
+      </section>
+      <section class="introduce" id="introduce">
+        <div class="container">
+          <div class="title">
+            <h2 class="orbitron-500">Introduce</h2>
+          </div>
+          <div class="content">
+            <p>
+              <span>"</span><br />
+              안녕하세요. <br />
+              최상의 결과와<br />
+              최상의 분위기 모두를<br />
+              만들어가고 싶은 개발자<br />
+              <strong> 김기태입니다.</strong>
+            </p>
+            <div class="resume">
+              <ul>
+                <li>
+                  <div class="resume_title">
+                    <h3>팀 줍줍</h3>
+                    <p>2025.01 ~ 현재 | 프론트엔드</p>
+
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer></footer>
+    <div class="hero_tooltip">
+      <div class="hero_tooltip_inner">
+        설명
+      </div>
+    </div>
+  </div>
+  <div class="webgl"></div>
+  <script type="module" src="/src/js/common_scss.js"></script>
+  <script type="module" src="/src/js/main.js"></script>
+  <script type="module" src="/src/js/animations/three.js"></script>
+</body>
+
+</html>

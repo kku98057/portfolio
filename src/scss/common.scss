@@ -1,0 +1,77 @@
+.wrap {
+  width: 100%;
+}
+.container {
+  width: 100%;
+  max-width: 2560px;
+  padding: 0 16px;
+  margin: 0 auto;
+  position: relative;
+  //   background-color: red;
+}
+.romanesco-regular {
+  font-family: "Romanesco", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+// <weight>: Use a value from 400 to 900
+// <uniquifier>: Use a unique and descriptive class name
+
+.orbitron-400 {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+.orbitron-500 {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+.orbitron-600 {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+.orbitron-700 {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+.orbitron-800 {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+.orbitron-900 {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+}
+
+@media all and (max-width: 2560px) {
+  .container {
+    max-width: 1920px;
+  }
+}
+@media all and (max-width: 1920px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+@media all and (max-width: 1280px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media all and (max-width: 768px) {
+  .container {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,73 @@
+// 전역 변수들
+$bgColor: #f4f4f4;
+$cl-black: #111111;
+$cl-white: #ffffff;
+$cl-blue: #667eea;
+$cl-purple: #764ba2;
+$cl-gray: #a1a1a1;
+$cl-skyblue: #3498db;
+
+// _variables.scss
+:root {
+  // 기본값 설정
+  --fs-xl: 25rem;
+  --fs-800: 15rem;
+  --fs-750: 12.5rem;
+  --fs-700: 10rem;
+  --fs-600: 5rem;
+  --fs-550: 4.5rem;
+  --fs-500: 4rem;
+  --fs-450: 3.5rem;
+  --fs-400: 3rem;
+  --fs-350: 2.5rem;
+  --fs-300: 2rem;
+  --fs-250: 1.5rem;
+  --fs-200: 1rem;
+  --fs-150: 0.75rem;
+  --fs-100: 0.5rem;
+
+  @media all and (max-width: 1280px) {
+    --fs-xl: 18rem;
+    --fs-800: 12rem;
+    --fs-750: 10rem;
+    --fs-700: 5rem;
+    --fs-600: 3rem;
+    --fs-500: 2.5rem;
+    --fs-400: 2rem;
+    --fs-350: 1.5rem;
+    --fs-300: 1rem;
+    --fs-200: 1rem;
+    --fs-100: 0.5rem;
+  }
+
+  @media all and (max-width: 768px) {
+    --fs-xl: 6rem;
+    --fs-800: 5rem;
+    --fs-750: 4rem;
+    --fs-700: 3rem;
+    --fs-600: 5rem;
+    --fs-500: 4rem;
+    --fs-400: 3rem;
+    --fs-350: 2.5rem;
+    --fs-300: 2rem;
+    --fs-200: 1rem;
+    --fs-100: 0.5rem;
+  }
+}
+
+// SCSS 변수로도 접근 가능하게
+$fs-xl: var(--fs-xl);
+$fs-800: var(--fs-800);
+$fs-750: var(--fs-750);
+$fs-700: var(--fs-700);
+$fs-600: var(--fs-600);
+$fs-550: var(--fs-550);
+$fs-500: var(--fs-500);
+$fs-450: var(--fs-450);
+$fs-400: var(--fs-400);
+$fs-350: var(--fs-350);
+$fs-300: var(--fs-300);
+$fs-250: var(--fs-250);
+$fs-200: var(--fs-200);
+$fs-150: var(--fs-150);
+$fs-100: var(--fs-100);
