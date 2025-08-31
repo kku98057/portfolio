@@ -1,0 +1,66 @@
+@use "variables";
+
+.contact {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: variables.$cl-white;
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+  .title {
+    align-items: flex-start;
+    padding-inline: max(1.6rem, min(10rem, 4vw));
+    h2 {
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      font-size: clamp(3rem, 5vw, 7rem);
+      letter-spacing: -0.02em;
+      line-height: 0;
+    }
+    p {
+      font-size: variables.$fs-300;
+    }
+  }
+  .content {
+    margin-top: max(3rem, min(16rem, 4vw));
+
+    padding-inline: max(1.6rem, min(10rem, 4vw));
+  }
+}
+.contact_list {
+  padding-block: max(3rem, min(5rem, 4vw));
+
+  display: flex;
+  gap: 15rem;
+  border-top: 1px solid rgba(255, 255, 255, 1);
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  i {
+    font-size: variables.$fs-300;
+    cursor: pointer;
+  }
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    strong {
+      font-size: variables.$fs-400;
+      font-weight: 600;
+    }
+    span {
+      font-size: variables.$fs-300;
+    }
+  }
+}
+@media all and (max-width: 768px) {
+  .contact_list {
+    flex-direction: column;
+    gap: 20px;
+  }
+}

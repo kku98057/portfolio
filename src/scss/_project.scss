@@ -1,26 +1,28 @@
 @use "variables";
 .project {
   width: 100%;
-  min-height: 100dvh;
+  min-height: 100svh;
   display: flex;
   justify-content: center;
   align-items: center;
   color: variables.$cl-white;
+
   .container {
     display: flex;
     flex-direction: column;
   }
   .title {
     align-items: flex-start;
+    padding-inline: max(1.6rem, min(10rem, 4vw));
+
     h2 {
       text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-      font-size: 7vw;
-      padding-left: 16px;
+      font-size: clamp(5rem, 7vw, 18rem);
       letter-spacing: -0.02em;
     }
   }
   .content {
-    margin-top: 16rem;
+    margin-top: max(3rem, min(16rem, 4vw));
     p {
       max-width: 1920px;
       letter-spacing: -0.02em;
@@ -29,28 +31,28 @@
   }
 }
 .project_list {
-  gap: 10rem;
   display: flex;
   flex-direction: column;
 
   > li {
     width: 100%;
-    padding: 3rem;
     display: flex;
-
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     align-items: stretch;
     justify-content: center;
+
     .project_image {
       width: 60%;
       display: flex;
       align-items: center;
       justify-content: center;
-      aspect-ratio: 16/9;
-      border-radius: 2rem;
+      aspect-ratio: 16/7;
+      opacity: 0.9;
       overflow: hidden;
+
       img {
         width: 100%;
-
         height: 100%;
         object-fit: cover;
         object-position: 60% 25%;
@@ -62,38 +64,105 @@
       display: flex;
       justify-content: center;
       flex-direction: column;
-      &:nth-of-type(odd) {
+      .project_data-content {
+        display: flex;
+        z-index: 1;
+        flex-direction: column;
+        padding: max(1.6rem, min(10rem, 4vw));
+        h3 {
+          font-size: clamp(6rem, 2vw + 3rem, variables.$fs-700);
+        }
+        p {
+          margin-top: 2rem;
+          font-size: variables.$fs-250;
+        }
+      }
+      .project_bg {
+        display: none;
+      }
+      &:nth-child(odd) .project_data-content {
         align-items: flex-start;
+        text-align: left;
       }
-      &:nth-of-type(even) {
+
+      // 짝수 번째 li의 project_data
+      &:nth-child(even) .project_data-content {
         align-items: flex-end;
-      }
-      h3 {
-        font-size: variables.$fs-700;
+        text-align: right;
+        ul {
+          justify-content: flex-end;
+        }
       }
     }
+  }
+  li:not(:first-child) {
+    border-top: none;
   }
 }
 
 .project_data-skills {
   display: flex;
-  margin-top: 4rem;
-  gap: 1rem;
+  margin-top: 2rem;
+  gap: 0.5rem;
+
   font-size: variables.$fs-250;
   font-weight: 600;
-  padding: 0.5rem 1rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
   color: variables.$cl-gray;
+  max-width: 360px;
 }
 .project_data-buttons {
-  margin-top: 4rem;
+  margin-top: 2rem;
   display: flex;
   gap: 1rem;
-  a {
-    color: variables.$cl-skyblue;
-    border: 2px solid variables.$cl-skyblue;
-    border-radius: 100px;
-    font-weight: 700;
-    font-size: variables.$fs-250;
-    padding: 1.5rem 3rem;
+}
+
+@media all and (max-width: 1280px) {
+  .project_list {
+    > li {
+      flex-direction: column;
+      border-top: 1px solid rgba(255, 255, 255, 1);
+      border-bottom: 1px solid rgba(255, 255, 255, 1);
+      .project_data {
+        width: 100%;
+        order: 1;
+        position: relative;
+        .project_data-content {
+          h3 {
+            font-size: clamp(3rem, 2vw + 3rem, 6rem);
+          }
+          p {
+            margin-top: max(2rem, min(4rem, 4vw));
+            font-size: variables.$fs-250;
+          }
+        }
+        .project_bg {
+          display: block;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          opacity: 0.9;
+          &::after {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: "";
+          }
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+          z-index: 0;
+        }
+      }
+      .project_image {
+        display: none;
+      }
+    }
   }
 }

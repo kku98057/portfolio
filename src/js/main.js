@@ -1,5 +1,6 @@
 import "../scss/main.scss";
 import { heroIntroAnimaion } from "./animations/intro";
+import "./cardFlip.js";
 
 const heroMenuAction = () => {
   const HOVER_DELAY = 200;
@@ -71,5 +72,17 @@ const scaleDown = (menu) => {
 const visibleOverFlow = () => {
   document.querySelector("body").classList.remove("active");
 };
+const email = document.querySelector(".fa-copy");
+const copyEmail = () => {
+  window.navigator.clipboard
+    .writeText("kku98057@naver.com")
+    .then(() => {
+      alert("이메일이 복사되었습니다");
+    })
+    .catch((err) => {
+      alert("복사에 실패하였습니다.");
+    });
+};
+
+email.addEventListener("click", copyEmail);
 heroMenuAction();
-heroIntroAnimaion();

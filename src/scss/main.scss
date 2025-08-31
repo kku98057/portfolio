@@ -4,23 +4,61 @@
 @use "hero";
 @use "introduce";
 @use "_project";
+@use "_contact";
 @use "variables";
 body.active {
   overflow: hidden;
 }
 .webgl {
   width: 100%;
-  height: 100dvh;
+  height: 100svh;
   top: 0;
   left: 0;
   position: fixed;
   pointer-events: none;
   z-index: -1;
 }
+
 .title {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: clamp(2rem, 1vw + variables.$fs-500, 4rem);
+}
+.loading_screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  &.loaded {
+    transform: translateY(-100%);
+  }
+  .progress_bar {
+    width: 100%;
+    height: 10px;
+  }
+  .progress_fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3a86ff, #8338ec, #ff006e);
+    border-radius: 2px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); // 부드러운 애니메이션
+    width: 0%;
+  }
+
+  .progress_message {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 0.5rem;
+    min-height: 1.5rem; // 텍스트 변경 시 깜빡임 방지
+    transition: opacity 0.3s ease;
+  }
 }

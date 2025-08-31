@@ -26,35 +26,49 @@ $cl-skyblue: #3498db;
   --fs-150: 0.75rem;
   --fs-100: 0.5rem;
 
-  @media all and (max-width: 1280px) {
-    --fs-xl: 18rem;
-    --fs-800: 12rem;
-    --fs-750: 10rem;
-    --fs-700: 5rem;
-    --fs-600: 3rem;
-    --fs-500: 2.5rem;
-    --fs-400: 2rem;
-    --fs-350: 1.5rem;
-    --fs-300: 1rem;
-    --fs-200: 1rem;
-    --fs-100: 0.5rem;
-  }
-
-  @media all and (max-width: 768px) {
-    --fs-xl: 6rem;
-    --fs-800: 5rem;
-    --fs-750: 4rem;
-    --fs-700: 3rem;
-    --fs-600: 5rem;
-    --fs-500: 4rem;
-    --fs-400: 3rem;
-    --fs-350: 2.5rem;
-    --fs-300: 2rem;
-    --fs-200: 1rem;
-    --fs-100: 0.5rem;
-  }
+  --mp-1300: 120rem;
+  --mp-1200: 100rem;
+  --mp-1100: 80rem;
+  --mp-1000: 60rem;
+  --mp-900: 40rem;
+  --mp-800: 20rem;
+  --mp-700: 10rem;
+  --mp-600: 10rem;
+  --mp-500: 8rem;
+  --mp-400: 6rem;
+  --mp-300: 4rem;
+  --mp-200: 2rem;
+  --mp-150: 1.5rem;
+  --mp-100: 1rem;
+  --mp-50: 0.5rem;
 }
+// @media all and (max-width: 1280px) {
+//   --fs-xl: 18rem;
+//   --fs-800: 12rem;
+//   --fs-750: 10rem;
+//   --fs-700: 5rem;
+//   --fs-600: 3rem;
+//   --fs-500: 2.5rem;
+//   --fs-400: 2rem;
+//   --fs-350: 1.5rem;
+//   --fs-300: 1rem;
+//   --fs-200: 1rem;
+//   --fs-100: 0.5rem;
+// }
 
+// @media all and (max-width: 768px) {
+//   --fs-xl: 6rem;
+//   --fs-800: 5rem;
+//   --fs-750: 4rem;
+//   --fs-700: 3rem;
+//   --fs-600: 5rem;
+//   --fs-500: 4rem;
+//   --fs-400: 3rem;
+//   --fs-350: 2.5rem;
+//   --fs-300: 2rem;
+//   --fs-200: 1rem;
+//   --fs-100: 0.5rem;
+// }
 // SCSS 변수로도 접근 가능하게
 $fs-xl: var(--fs-xl);
 $fs-800: var(--fs-800);

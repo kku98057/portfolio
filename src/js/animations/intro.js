@@ -1,6 +1,7 @@
 import gsap from "gsap";
 
 export const heroIntroAnimaion = () => {
+  console.log("시작!");
   const hero = document.querySelector("#hero");
 
   const heroTl = gsap.timeline();
