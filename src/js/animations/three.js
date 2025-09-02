@@ -501,7 +501,7 @@ export default class Three {
             opacity: 0,
             ease: "none",
             duration: 1,
-            xPercent: 20,
+            yPercent: -70,
           },
           7
         )
@@ -521,7 +521,7 @@ export default class Three {
             opacity: 0,
             ease: "none",
             duration: 1,
-            xPercent: -20,
+            xPercent: -70,
           },
           9
         )
