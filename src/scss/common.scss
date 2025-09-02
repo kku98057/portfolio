@@ -16,19 +16,16 @@
   font-weight: 400;
   font-style: normal;
 }
-section:not(.hero) {
-  margin-block: 200rem;
-}
-section:last-child {
-  margin-bottom: 20rem;
-}
+
 .click_button {
-  color: variables.$cl-skyblue;
-  border: 2px solid variables.$cl-skyblue;
   border-radius: 100px;
   font-weight: 700;
   font-size: variables.$fs-250;
   padding: 1.5rem 3rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  padding: 0.8rem 1.5rem;
+  color: #fff;
 }
 // <weight>: Use a value from 400 to 900
 // <uniquifier>: Use a unique and descriptive class name
@@ -69,25 +66,3 @@ section:last-child {
   font-weight: 900;
   font-style: normal;
 }
-
-// @media all and (max-width: 2560px) {
-//   .container {
-//     max-width: 1920px;
-//   }
-// }
-// @media all and (max-width: 1920px) {
-//   .container {
-//     max-width: 1280px;
-//   }
-// }
-// @media all and (max-width: 1280px) {
-//   .container {
-//     max-width: 768px;
-//   }
-// }
-
-// @media all and (max-width: 768px) {
-//   .container {
-//     max-width: 100%;
-//   }
-// }

@@ -2,69 +2,139 @@
 
 .introduce {
   width: 100%;
-  min-height: 100svh;
+  min-height: 100dvh;
+  overflow: hidden;
+
   display: flex;
   justify-content: center;
   align-items: center;
   color: variables.$cl-white;
+
   .container {
     display: flex;
     flex-direction: column;
   }
-  .title {
-    align-items: flex-start;
-    padding-inline: max(1.6rem, min(10rem, 4vw));
 
-    h2 {
-      text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-      font-size: clamp(5rem, 7vw, 18rem);
-      letter-spacing: -0.02em;
-    }
-  }
   .content {
-    margin-top: max(3rem, min(16rem, 4vw));
-    padding-inline: max(1.6rem, min(10rem, 4vw));
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
 .self {
+  width: 100%;
+  height: 100%;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
 
-  p {
-    padding-right: 10rem;
-    font-size: variables.$fs-300;
-    line-height: 1.5;
-    span {
-      font-size: variables.$fs-700;
-      line-height: 1;
+  .intro_section {
+    position: relative;
+    h3 {
+      font-size: variables.$fs-200;
+      color: variables.$cl-blue;
+      font-weight: 500;
+      text-transform: uppercase;
+      text-align: center;
+      letter-spacing: 2px;
+      position: relative;
     }
-    strong {
+    p {
+      white-space: nowrap;
+      text-align: center;
       font-size: variables.$fs-600;
+
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.95);
+
+      font-weight: 600;
+    }
+    p:not(.text_1 p) {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      strong {
+        font-size: variables.$fs-700;
+        color: white;
+        font-weight: 700;
+      }
+    }
+    .text_1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .text_in1 {
+        opacity: 1;
+      }
+      .text_in2 {
+        position: relative;
+        overflow: hidden;
+        p {
+          opacity: 1;
+        }
+        p:last-child {
+          opacity: 0;
+          position: absolute;
+          top: 100%;
+        }
+      }
     }
   }
-  .skills {
-    padding-left: 10rem;
-    border-left: 1px solid rgba(255, 255, 255, 0.5);
 
-    h4 {
-      font-size: variables.$fs-600;
-      line-height: 1;
+  .skills_section {
+    transform: translate3d(-50%, -50%, -1000px);
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90vw;
+    max-width: 95vw;
+    max-width: 768px;
+
+    h3 {
+      font-size: variables.$fs-400;
+      font-weight: 500;
       margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+      text-align: center;
     }
-    ul {
+
+    .skills_grid {
+      //   display: grid;
+      //   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       display: flex;
       flex-wrap: wrap;
-      column-gap: 1rem;
-      row-gap: 0.5rem;
-      max-width: 360px;
-      li {
-        font-size: variables.$fs-300;
-        line-height: 1;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        span {
-          font-size: variables.$fs-200;
-        }
+      gap: 1rem;
+      justify-content: center;
+
+      .skill_item {
+        flex-basis: 150px;
+        flex-shrink: 0;
+        color: variables.$cl-white;
+        border: 1px solid variables.$cl-skyblue;
+        font-size: variables.$fs-250;
+        backdrop-filter: blur(20px);
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 1rem;
+        border-radius: 8px;
+        text-align: center;
+        font-size: variables.$fs-250;
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
       }
     }
   }
@@ -77,115 +147,119 @@
   margin-top: 1rem;
 }
 .resume {
-  margin-top: 10rem;
+  width: 100%;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  position: relative;
+  overflow: hidden;
+  padding: 0 max(1.6rem, min(10rem, 4vw));
+  // 섹션 헤더 추가
+  &:before {
+    content: "";
+    display: none;
 
-  > ul {
-    display: flex;
+    font-size: variables.$fs-400;
+    color: variables.$cl-white;
+    font-weight: 500;
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+    margin-bottom: 3rem;
+    text-align: center;
     position: relative;
+    opacity: 0;
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+    }
+  }
 
-    gap: 3rem;
-    flex-wrap: wrap;
+  padding-top: 5rem;
+  > ul {
+    > .cardflip {
+      backdrop-filter: blur(10px);
+      max-width: 480px;
 
-    > li.cardflip {
       perspective: 1000px;
-      width: 400px;
-      height: 500px;
+      height: auto;
+      min-height: 400px;
 
       .card {
         position: relative;
         width: 100%;
         height: 100%;
         transform-style: preserve-3d;
-        transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         cursor: pointer;
 
-        // 카드가 뒤집힌 상태
         &.flipped {
           transform: rotateY(180deg);
         }
 
-        // 호버 효과
         &:hover {
-          transform: translateY(-10px) scale(1.02);
+          transform: translateY(-8px);
 
           &.flipped {
-            transform: translateY(-10px) scale(1.02) rotateY(180deg);
+            transform: translateY(-8px) rotateY(180deg);
           }
         }
       }
 
-      // 앞면과 뒷면 공통 스타일
-      .card_front,
-      .card_back {
+      .card_front {
         position: absolute;
         width: 100%;
         height: 100%;
         backface-visibility: hidden;
-        border-radius: 24px;
+        border-radius: 16px;
         padding: 2rem;
         display: flex;
         flex-direction: column;
-        background: linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.1) 0%,
-          rgba(255, 255, 255, 0.05) 100%
-        );
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
-          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        transition: all 0.3s ease;
       }
 
       // 앞면 스타일
       .card_front {
-        background: linear-gradient(
-          135deg,
-          rgba(58, 134, 255, 0.15) 0%,
-          rgba(131, 56, 236, 0.1) 100%
-        );
-      }
-
-      // 뒷면 스타일 (뒤집혀 있음)
-      .card_back {
-        transform: rotateY(180deg);
-        background: linear-gradient(
-          135deg,
-          rgba(255, 0, 110, 0.15) 0%,
-          rgba(255, 107, 53, 0.1) 100%
-        );
+        border-left: 3px solid variables.$cl-blue;
       }
 
       // 카드 헤더
       .card_header {
         margin-bottom: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 1rem;
 
         h3 {
-          font-size: 1.8rem;
-          font-weight: 700;
+          font-size: variables.$fs-350;
+          font-weight: 600;
           margin-bottom: 0.8rem;
-          background: linear-gradient(135deg, #3a86ff, #8338ec);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          color: white;
         }
 
         .period {
-          font-size: 0.9rem;
-          color: #3a86ff;
-          font-weight: 600;
+          font-size: variables.$fs-250;
+          color: variables.$cl-blue;
+          font-weight: 500;
           margin-bottom: 0.4rem;
         }
 
         .position {
-          font-size: 1.1rem;
-          color: rgba(255, 255, 255, 0.9);
-          font-weight: 500;
+          font-size: variables.$fs-250;
+          color: rgba(255, 255, 255, 0.8);
+          font-weight: 400;
         }
 
         .tech_info {
-          font-size: 0.85rem;
-          color: rgba(255, 255, 255, 0.7);
-          line-height: 1.4;
+          font-size: variables.$fs-250;
+          color: rgba(255, 255, 255, 0.6);
+          line-height: 1.5;
+          margin-top: 0.5rem;
         }
       }
 
@@ -199,38 +273,41 @@
           display: flex;
           flex-wrap: wrap;
           gap: 0.5rem;
-          margin-bottom: 1rem;
+          margin-bottom: 1.5rem;
 
           .tech_tag {
-            padding: 0.4rem 0.8rem;
-            background: rgba(58, 134, 255, 0.2);
-            border: 1px solid rgba(58, 134, 255, 0.3);
-            border-radius: 12px;
-            font-size: 0.8rem;
+            padding: 0.3rem 0.8rem;
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 6px;
+            font-size: variables.$fs-200;
             font-weight: 500;
-            color: #3a86ff;
+            color: rgba(255, 255, 255, 0.8);
             transition: all 0.3s ease;
 
             &:hover {
-              background: rgba(58, 134, 255, 0.3);
-              transform: translateY(-1px);
+              background: rgba(102, 126, 234, 0.2);
+              border-color: variables.$cl-blue;
+              color: white;
             }
           }
         }
 
-        .project-desc {
-          font-size: 1rem;
+        .project_desc {
+          font-size: variables.$fs-250;
           color: rgba(255, 255, 255, 0.8);
-          line-height: 1.5;
+          line-height: 1.6;
           margin-bottom: 1rem;
         }
 
         .worklist {
           h4 {
-            font-size: 1.1rem;
-            color: #ff6b35;
+            font-size: variables.$fs-250;
+            color: variables.$cl-blue;
             font-weight: 600;
             margin-bottom: 1rem;
+            border-bottom: 1px solid variables.$cl-blue;
+            padding-bottom: 1rem;
           }
 
           ul {
@@ -239,17 +316,24 @@
             gap: 0.8rem;
 
             li {
-              font-size: 0.9rem;
+              font-size: variables.$fs-200;
               color: rgba(255, 255, 255, 0.8);
               display: flex;
               align-items: flex-start;
-              line-height: 1.4;
+              line-height: 1.5;
+
+              position: relative;
+
+              //   &:before {
+              //     content: "▸";
+              //     position: absolute;
+              //     left: 0;
+              //     color: variables.$cl-blue;
+              //     font-size: variables.$fs-200;
+              //   }
 
               span {
-                color: #ff6b35;
-                margin-right: 0.8rem;
-                margin-top: 0.1rem;
-                font-size: 0.7rem;
+                display: none; // 기존 ● 숨김
               }
             }
           }
@@ -260,16 +344,17 @@
       .card_footer {
         margin-top: auto;
         text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
 
         .flip_hint {
-          font-size: 0.8rem;
-          color: rgba(255, 255, 255, 0.6);
-          font-style: italic;
+          font-size: variables.$fs-200;
+          color: rgba(255, 255, 255, 0.5);
           transition: color 0.3s ease;
         }
 
         &:hover .flip_hint {
-          color: rgba(255, 255, 255, 0.9);
+          color: variables.$cl-blue;
         }
       }
     }
@@ -278,45 +363,13 @@
 
 @media all and (max-width: 1280px) {
   .self {
-    display: flex;
-    flex-direction: column;
-
-    p {
-      padding-right: 0rem;
-      font-size: variables.$fs-300;
-      line-height: 1.5;
-      span {
-        font-size: variables.$fs-700;
-        line-height: 1;
+    .intro_section {
+      p {
+        font-size: variables.$fs-400;
       }
-      strong {
-        font-size: variables.$fs-600;
-      }
-    }
-    .skills {
-      padding-top: 2rem;
-      padding-left: 0rem;
-      border-left: none;
-      h4 {
-        font-size: variables.$fs-600;
-        line-height: 1;
-        margin-bottom: 2rem;
-      }
-      ul {
-        display: flex;
-        flex-wrap: wrap;
-        column-gap: 1rem;
-        row-gap: 0.5rem;
-        max-width: 480px;
-        li {
-          font-size: variables.$fs-300;
-          line-height: 1;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          span {
-            font-size: variables.$fs-200;
-          }
+      p:not(.text_1 p) {
+        strong {
+          font-size: variables.$fs-600;
         }
       }
     }

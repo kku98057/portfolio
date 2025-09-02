@@ -17,15 +17,15 @@
       text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
       font-size: clamp(3rem, 5vw, 7rem);
       letter-spacing: -0.02em;
-      line-height: 0;
+      line-height: 1;
     }
     p {
       font-size: variables.$fs-300;
+      margin-top: -4rem;
     }
   }
   .content {
-    margin-top: max(3rem, min(16rem, 4vw));
-
+    margin-block: max(3rem, min(16rem, 4vw));
     padding-inline: max(1.6rem, min(10rem, 4vw));
   }
 }

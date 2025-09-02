@@ -1,6 +1,4 @@
 import "../scss/main.scss";
-import { heroIntroAnimaion } from "./animations/intro";
-import "./cardFlip.js";
 
 const heroMenuAction = () => {
   const HOVER_DELAY = 200;
@@ -28,17 +26,17 @@ const heroMenuAction = () => {
   };
 
   //마우스 움직일시 툴팁출력
-  heroMenuWrap.addEventListener("mousemove", showTooltip);
+  // heroMenuWrap.addEventListener("mousemove", showTooltip);
 
   //마우스 뗄시 툴팁숨김
-  heroMenuWrap.addEventListener("mouseleave", hideTooltip);
+  // heroMenuWrap.addEventListener("mouseleave", hideTooltip);
   heroMenus.forEach((menu) => {
     menu.addEventListener("click", (e) => {
       visibleOverFlow();
     });
     let hoverTimeout;
     const dataset = menu.children[0].dataset.menu;
-    console.log(dataset);
+
     menu.addEventListener("mouseenter", (e) => {
       // 기존 타이머가 있다면 제거
       if (hoverTimeout) {

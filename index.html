@@ -5,6 +5,23 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Romanesco&display=swap"
@@ -21,17 +38,12 @@
       <div class="progress_fill" id="progress_fill"></div>
     </div>
     <div class="progress_text" id="progress_text">0%</div>
-    <div class="progress_message" id="progress_message">초기화 중...</div> <!-- 추가 -->
+    <div class="progress_message" id="progress_message">초기화 중...</div>
   </div>
   <div class="wrap">
 
     <header>
-      <div></div>
-      <div class="menu">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+
     </header>
     <main>
       <section class="hero" id="hero">
@@ -40,8 +52,18 @@
             <h1 class="romanesco-regular">
               Portfolio
             </h1>
-            <p class="sub_title">FrontEnd Developer</p>
-            <div class="hero_menu_wrap" id="hero_menu_wrap">
+            <div class="sub">
+              <p class="sub_title">FrontEnd Developer</p>
+              <div class="introduce_buttons">
+                <a href="https://www.notion.so/239a9be6290680ad80fdff4f9a058f9c?source=copy_link" class="click_button"
+                  target="_blank">노션이동</a>
+                <a href="/이력&경력기술서.pdf" class="click_button" download="이력&경력기술서.pdf">이력서PDF</a>
+              </div>
+            </div>
+
+
+
+            <!-- <div class="hero_menu_wrap" id="hero_menu_wrap">
               <ul class="hero_menu" id="hero_menu">
 
                 <li data-menu-size="100"><a href="#introduce" data-menu="자기소개"><i class="fa-regular fa-user"></i></a>
@@ -53,20 +75,23 @@
                 <li data-menu-size="100"><a href="#contact" data-menu="연락처"><i
                       class="fa-regular fa-address-card"></i></a></li>
               </ul>
-            </div>
+            </div> -->
           </div>
         </div>
 
       </section>
+
       <section class="project" id="project">
+
         <div class="container">
-          <div class="title">
-            <h2 class="orbitron-500">Project</h2>
-          </div>
+
           <div class="content">
             <ul class="project_list">
 
               <li>
+                <div class="project_image">
+                  <img src="/images/joopjoop.jpg" alt="">
+                </div>
                 <div class="project_data">
                   <div class="project_bg"> <img src="/images/joopjoop.jpg" alt=""></div>
                   <div class="project_data-content">
@@ -89,9 +114,6 @@
                     </div>
                   </div>
 
-                </div>
-                <div class="project_image">
-                  <img src="/images/joopjoop.jpg" alt="">
                 </div>
               </li>
               <li>
@@ -120,61 +142,128 @@
                       <a href="" role="button" class="click_button">View Project</a>
                     </div>
                   </div>
-
-
-
                 </div>
 
-
               </li>
+              <li>
+                <div class="project_image">
+                  <img src="/images/sia.png" alt="">
+                </div>
+                <div class="project_data">
+                  <div class="project_bg"> <img src="/images/sia.png" alt=""></div>
+                  <div class="project_data-content">
+                    <h3>SIA</h3>
+                    <p>정보인증관리 플랫폼의 랜딩페이지 입니다.</p>
+                    <ul class="project_data-skills">
+                      <li>HTML</li>
+                      <li>CSS</li>
+                      <li>JavaScript</li>
+                      <li>GSAP</li>
+                    </ul>
+                    <div class="project_data-buttons">
+                      <a href="https://kku98057.github.io/sia/" target="_blank" role="button" class="click_button">View
+                        Project</a>
+                    </div>
+                  </div>
 
+                </div>
+              </li>
+              <li>
+                <div class="project_image">
+                  <img src="/images/lod.png" alt="">
+                </div>
+                <div class="project_data">
+                  <div class="project_bg"> <img src="/images/lod.png" alt=""></div>
+                  <div class="project_data-content">
+                    <h3>Lord of Dragons</h3>
+                    <p>로드 오브 드래곤 게임의 랜딩페이지입니다.</p>
+                    <ul class="project_data-skills">
+                      <li>HTML</li>
+                      <li>CSS</li>
+                      <li>JavaScript</li>
+                      <li>GSAP</li>
+                    </ul>
+                    <div class="project_data-buttons">
+                      <a href="https://kku98057.github.io/lod/" target="_blank" role="button" class="click_button">View
+                        Project</a>
+                    </div>
+                  </div>
+
+                </div>
+              </li>
+              <li>
+                <div class="project_image">
+                  <img src="/images/pixer.png" alt="">
+                </div>
+                <div class="project_data">
+                  <div class="project_bg">
+                    <img src="/images/pixer.png" alt="">
+                  </div>
+                  <div class="project_data-content">
+                    <h3>PIXER</h3>
+                    <p>AR 및 게임기반 코인 플랫폼의 랜딩페이지입니다.</p>
+                    <ul class="project_data-skills">
+                      <li>HTML</li>
+                      <li>CSS</li>
+                      <li>JavaScript</li>
+                      <li>GSAP</li>
+                    </ul>
+                    <div class="project_data-buttons">
+                      <a href="https://kku98057.github.io/pixer/" role="button" target="_blank"
+                        class="click_button">View Project</a>
+                    </div>
+                  </div>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
       </section>
       <section class="introduce" id="introduce">
         <div class="container">
-          <div class="title">
-            <h2 class="orbitron-500">Introduce</h2>
-          </div>
+
           <div class="content">
             <div class="self">
-              <p>
-                안녕하세요. <br />
-                최상의 결과와<br />
-                최상의 분위기 모두를<br />
-                만들어가고 싶은 개발자<br />
-                <strong> 김기태</strong>입니다.
-              </p>
-              <div class="skills">
-                <h4>SKILLS</h4>
-                <ul>
-                  <li><span>●</span>HTML</li>
-                  <li><span>●</span>CSS</li>
-                  <li><span>●</span>TailwindCss</li>
-                  <li><span>●</span>JavaScript</li>
-                  <li><span>●</span>TypeScript</li>
-                  <li><span>●</span>Threejs</li>
-                  <li><span>●</span>gsap</li>
-                  <li><span>●</span>React</li>
-                  <li><span>●</span>Nextjs</li>
-                  <li><span>●</span>react-query</li>
-                  <li><span>●</span>zustand</li>
-                  <li><span>●</span>recoil</li>
+              <div class="intro_section">
+                <div class="text_1">
+                  <p class="text_in1">최상의&nbsp;</p>
+                  <div class="text_in2">
+                    <p>결과와</p>
+                    <p>분위기</p>
+                  </div>
+                </div>
+                <p class="text_2">모두를</p>
+                <p class="text_3">만들어가고 싶은</p>
+                <p class="text_4">프론트 엔지니어</p>
+                <p class="text_5"><strong>김기태</strong>입니다.</p>
 
 
-                </ul>
               </div>
 
+              <div class="skills_section">
+                <h3>Tech Stack</h3>
+                <div class="skills_grid">
+                  <div class="skill_item">HTML</div>
+                  <div class="skill_item">CSS</div>
+                  <div class="skill_item">JavaScript</div>
+                  <div class="skill_item ">TypeScript</div>
+                  <div class="skill_item">TailwindCSS</div>
+                  <div class="skill_item ">React</div>
+                  <div class="skill_item ">NextJs</div>
+                  <div class="skill_item ">ThreeJs</div>
+                  <div class="skill_item">GSAP</div>
+                  <div class="skill_item">React-Query</div>
+                  <div class="skill_item">Zustand</div>
+                  <div class="skill_item">Recoil</div>
+
+
+                </div>
+              </div>
             </div>
-            <div class="introduce_buttons">
-              <a href="https://www.notion.so/239a9be6290680ad80fdff4f9a058f9c?source=copy_link" class="click_button"
-                target="_blank">상세보기</a>
-              <a href="/이력&경력기술서.pdf" class="click_button" download="이력&경력기술서.pdf">다운받기</a>
-            </div>
-            <div class="resume">
-              <ul>
-                <li class="cardflip">
+
+            <div class="resume resume_swiper">
+              <ul class="swiper-wrapper">
+                <li class="cardflip swiper-slide">
                   <div class="card">
                     <!-- 앞면 -->
                     <div class="card_front">
@@ -184,55 +273,27 @@
                         <p class="position">프론트엔드 </p>
                       </div>
                       <div class="card_content">
+                        <div class="tech_stack">
+                          <span class="tech_tag">Flutter</span>
+                          <span class="tech_tag">React</span>
+                          <span class="tech_tag">TailwindCss</span>
+                          <span class="tech_tag">JavaScript</span>
+                          <span class="tech_tag">Typescript</span>
+                          <span class="tech_tag">React-Query</span>
+                          <span class="tech_tag">Zustand</span>
 
-                        <p class="project_desc">미션형 앱테크 신규 개발</p>
-                      </div>
-                      <div class="card_footer">
-                        <span class="flip_hint">클릭하여 상세보기 →</span>
-                      </div>
-                    </div>
-
-                    <!-- 뒷면 -->
-                    <div class="card_back">
-                      <div class="card_header">
-                        <h3>상세 업무 내용</h3>
-                        <p class="tech-info">
-                          미션 및 게임 기반의 앱테크 서비스 개발
-                        </p>
-                      </div>
-                      <div class="card_content">
-                        <div class="worklist">
-                          <h4>주요업무</h4>
-                          <ul>
-                            <li>
-                              <span>●</span> 프로젝트 구조 설계 및 컴포넌트 개발
-                            </li>
-                            <li>
-                              <span>●</span> 구글, 카카오, 이메일 로그인 구현
-                            </li>
-                            <li>
-                              <span>●</span> Flutter 브릿지를 통한 데이터 통신
-                            </li>
-                            <li>
-                              <span>●</span> 어드민 페이지 개발
-                            </li>
-                            <li>
-                              <span>●</span> 미션 및 클릭형 게임 개발
-                            </li>
-                            <li>
-                              <span>●</span> 구글 광고 연동
-                            </li>
-                          </ul>
                         </div>
+                        <p class="project_desc">줍줍 앱 개발 및 유지보수</p>
+                        <p class="project_desc">줍줍 앱 어드민 페이지 개발 및 유지보수</p>
                       </div>
-                      <div class="card_footer">
-                        <span class="flip_hint">← 클릭하여 돌아가기</span>
-                      </div>
+
                     </div>
+
+
                   </div>
                 </li>
 
-                <li class="cardflip">
+                <li class="cardflip swiper-slide">
                   <div class="card">
                     <!-- 앞면 -->
                     <div class="card_front">
@@ -241,102 +302,49 @@
                         <p class="period">2024.05 ~ 2024.11</p>
                         <p class="position">프론트엔드</p>
                       </div>
-
-                      <div class="card_footer">
-                        <span class="flip_hint">클릭하여 상세보기 →</span>
-                      </div>
-                    </div>
-
-                    <!-- 뒷면 -->
-                    <div class="card_back">
-                      <div class="card_header">
-                        <h3>프로젝트 상세</h3>
-                        <p class="tech-info">Next.js, Node.js, MongoDB<br />
-                          Three.js, GSAP, Framer Motion</p>
-                      </div>
                       <div class="card_content">
-                        <div class="worklist">
-                          <h4>구현 기능</h4>
-                          <ul>
-                            <li>
-                              <span>●</span> 반응형 웹 디자인
-                            </li>
-                            <li>
-                              <span>●</span> 3D 인터랙션 구현
-                            </li>
-                            <li>
-                              <span>●</span> 스무스 스크롤 애니메이션
-                            </li>
-                            <li>
-                              <span>●</span> 다크/라이트 모드
-                            </li>
-                            <li>
-                              <span>●</span> SEO 최적화
-                            </li>
-                          </ul>
+                        <div class="tech_stack">
+                          <span class="tech_tag">NextJs</span>
+                          <span class="tech_tag">React</span>
+                          <span class="tech_tag">TailwindCss</span>
+                          <span class="tech_tag">JavaScript</span>
+                          <span class="tech_tag">Typescript</span>
+                          <span class="tech_tag">React-Query</span>
+                          <span class="tech_tag">Recoil</span>
+
                         </div>
+                        <p class="project_desc">이슈타운 개발 및 유지보수</p>
+                        <p class="project_desc">이슈타운 어드민 페이지 개발 및 유지보수</p>
                       </div>
-                      <div class="card_footer">
-                        <span class="flip_hint">← 클릭하여 돌아가기</span>
-                      </div>
+
                     </div>
+
                   </div>
                 </li>
-                <li class="cardflip">
+                <li class="cardflip swiper-slide">
                   <div class="card">
-                    <!-- 앞면 -->
+
                     <div class="card_front">
                       <div class="card_header">
                         <h3>(주)선후</h3>
-                        <p class="period">2024.01 ~ 2024.12</p>
-                        <p class="position">풀스택 개발자</p>
+                        <p class="period">2023.02 ~ 2024.04</p>
+                        <p class="position">퍼블리셔</p>
                       </div>
                       <div class="card_content">
                         <div class="tech_stack">
-                          <span class="tech_tag">Next.js</span>
-                          <span class="tech_tag">Node.js</span>
-                          <span class="tech_tag">MongoDB</span>
+                          <span class="tech_tag">HTML</span>
+                          <span class="tech_tag">CSS</span>
+                          <span class="tech_tag">JavaScript</span>
+                          <span class="tech_tag">GSAP</span>
+                          <span class="tech_tag">React</span>
                         </div>
-                        <p class="project_desc">포트폴리오 웹사이트 개발</p>
+                        <p class="project_desc">선후 공식 홈페이지 개발</p>
+                        <p class="project_desc">게임사 랜딩 페이지 개발</p>
+                        <p class="project_desc">디에이블 어드민 페이지 개발</p>
                       </div>
-                      <div class="card_footer">
-                        <span class="flip_hint">클릭하여 상세보기 →</span>
-                      </div>
+
                     </div>
 
-                    <!-- 뒷면 -->
-                    <div class="card_back">
-                      <div class="card_header">
-                        <h3>프로젝트 상세</h3>
-                        <p class="tech-info">Next.js, Node.js, MongoDB<br />
-                          Three.js, GSAP, Framer Motion</p>
-                      </div>
-                      <div class="card_content">
-                        <div class="worklist">
-                          <h4>구현 기능</h4>
-                          <ul>
-                            <li>
-                              <span>●</span> 반응형 웹 디자인
-                            </li>
-                            <li>
-                              <span>●</span> 3D 인터랙션 구현
-                            </li>
-                            <li>
-                              <span>●</span> 스무스 스크롤 애니메이션
-                            </li>
-                            <li>
-                              <span>●</span> 다크/라이트 모드
-                            </li>
-                            <li>
-                              <span>●</span> SEO 최적화
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div class="card_footer">
-                        <span class="flip_hint">← 클릭하여 돌아가기</span>
-                      </div>
-                    </div>
                   </div>
                 </li>
               </ul>
@@ -379,9 +387,11 @@
     </div>
   </div>
   <div class="webgl"></div>
+
   <script type="module" src="/src/js/common_scss.js"></script>
   <script type="module" src="/src/js/main.js"></script>
   <script type="module" src="/src/js/animations/three.js"></script>
+  <script type="module" src="/src/js/animations/slide.js"></script>
 </body>
 
 </html>

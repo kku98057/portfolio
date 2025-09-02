@@ -11,7 +11,7 @@ body.active {
 }
 .webgl {
   width: 100%;
-  height: 100svh;
+  height: 100dvh;
   top: 0;
   left: 0;
   position: fixed;
@@ -61,4 +61,33 @@ body.active {
     min-height: 1.5rem; // 텍스트 변경 시 깜빡임 방지
     transition: opacity 0.3s ease;
   }
+}
+
+.threejs_scroller {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+.hero_part {
+  width: 100%;
+  background-color: red;
+}
+.project_part {
+  width: 100%;
+  background-color: bisque;
+}
+.introduce_part {
+  width: 100%;
+  background-color: blue;
+}
+.contact_part {
+  width: 100%;
+  background-color: green;
+}
+
+.dg.ac {
+  z-index: 2222222 !important;
 }

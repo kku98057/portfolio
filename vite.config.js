@@ -7,7 +7,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: "./index.html",
-        about: "./about/index.html",
       },
       output: {
         manualChunks: {
@@ -18,11 +17,11 @@ export default defineConfig({
     },
   },
   preview: {
-    host: true, // 🎯 모든 네트워크 인터페이스에서 접근 허용
-    port: 4173, // 기본 preview 포트
+    host: true,
+    port: 4173,
   },
   server: {
-    host: true, // 🎯 모든 네트워크 인터페이스에서 접근 허용
-    port: 5173, // 기본 preview 포트
+    host: true,
+    port: 5173,
   },
 });

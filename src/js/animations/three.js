@@ -1,10 +1,10 @@
 import * as THREE from "three";
-
+import * as dat from "dat.gui";
 import {
   DRACOLoader,
   GLTFLoader,
-  MeshSurfaceSampler,
   OrbitControls,
+  MeshSurfaceSampler,
 } from "three/examples/jsm/Addons.js";
 import {
   EffectComposer,
@@ -12,26 +12,32 @@ import {
   BloomEffect,
   EffectPass,
 } from "postprocessing";
-import { heroIntroAnimaion } from "./intro";
+
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
+import { CSSRulePlugin, ScrollTrigger } from "gsap/all";
 import vertex from "../../gsls/vertex.glsl?raw";
 import fragment from "../../gsls/fragment.glsl?raw";
-import fragmentGlb from "../../gsls/fragmentGlb.glsl?raw";
-import vertexGlb from "../../gsls/vertexGlb.glsl?raw";
+
+import Lenis from "lenis";
+import { morphTarget } from "./animaionSquence";
+import CreateParticlePositions from "../createParticle";
+const progressDivider = (min, max, progress) => {
+  return Math.max(0, Math.min(1, (progress - min) / (max - min)));
+};
 export default class Three {
   constructor() {
     this.updateProgress(10, "Three.js 초기화 중...");
 
+    gsap.registerPlugin(ScrollTrigger, CSSRulePlugin);
+    this.resetScroll();
     this.container = document.querySelector(".webgl");
-
     this.randomRange = (min, max) => {
       return Math.random() * (max - min) + min;
     };
 
     this.init();
 
-    window.addEventListener("mousemove", this.mouseMove.bind(this));
+    // window.addEventListener("mousemove", this.mouseMove.bind(this));
   }
   async init() {
     try {
@@ -43,6 +49,7 @@ export default class Three {
         antialias: true,
         alpha: true,
       });
+
       this.container = document.querySelector(".webgl");
 
       await this.delay(50);
@@ -55,10 +62,9 @@ export default class Three {
         0.1,
         1000
       );
-
+      this.scene.fog = new THREE.Fog(0xffffff, 50, 200);
       await this.delay(50);
       this.updateProgress(40, "렌더러 설정...");
-
       this.renderer = new THREE.WebGLRenderer({
         antialias: true,
         alpha: true,
@@ -67,7 +73,6 @@ export default class Three {
       this.renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
       this.renderer.setClearColor("black", 0);
       this.container.appendChild(this.renderer.domElement);
-      new OrbitControls(this.camera, this.renderer.domElement);
 
       await this.delay(50);
       this.updateProgress(55, "카메라 및 라이트 설정...");
@@ -84,8 +89,7 @@ export default class Three {
       this.updateProgress(85, "파티클 시스템 생성...");
 
       this.background();
-      gsap.registerPlugin(ScrollTrigger);
-      // this.scollEvent();
+
       await this.delay(50);
       this.updateProgress(95, "후처리 효과 설정...");
 
@@ -94,14 +98,28 @@ export default class Three {
 
       await this.delay(50);
       this.updateProgress(100, "로딩 완료!");
-
+      this.setupGUI();
+      new OrbitControls(this.camera, this.renderer.domElement);
       this.hideLoadingScreen();
     } catch (error) {
       console.error("Three.js 초기화 실패:", error);
       this.hideLoadingScreen();
     }
   }
+  setupGUI() {
+    // this.gui = new dat.GUI();
+  }
+  resetScroll() {
+    // 스크롤 복원 막기
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
 
+    // 강제로 맨 위로
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
   setupCamera() {
     const width = this.container.clientWidth;
     const height = this.container.clientHeight;
@@ -114,25 +132,39 @@ export default class Three {
     this.scene.add(this.camera);
   }
   setupLight() {
-    const light = new THREE.DirectionalLight("red", 1);
-    light.position.set(-1, 2, 4);
-    this.scene.add(light);
+    // this.headLight = new THREE.SpotLight(
+    //   0xffffff,
+    //   100,
+    //   50,
+    //   Math.PI / 6,
+    //   0.25,
+    //   1
+    // );
+    // this.headLight.position.set(0, 0, 0.5); // 카메라 약간 앞
+    // this.headLight.target.position.set(0, 0, -1); // 카메라가 보는 방향
+    // this.camera.add(this.headLight);
+    // this.camera.add(this.headLight.target);
+    // this.scene.add(this.camera);
   }
 
   background() {
-    this.backColor = new Float32Array(1200);
-    this.backPositionArray = new Float32Array(1200);
-    for (let i = 0; i < 1200; i++) {
-      this.backPositionArray[i] = this.randomRange(-20, 20);
-      this.backPositionArray[i + 1] = this.randomRange(-20, 20);
-      this.backPositionArray[i + 2] = this.randomRange(-20, 20);
+    const BACKGROUND_COUNT = 4800;
+
+    this.backColor = new Float32Array(BACKGROUND_COUNT);
+    this.backPositionArray = new Float32Array(BACKGROUND_COUNT);
+    for (let i = 0; i < BACKGROUND_COUNT; i++) {
+      //백그라운드 범위지정
+      this.backPositionArray[i] = this.randomRange(-60, 60);
+      this.backPositionArray[i + 1] = this.randomRange(-60, 60);
+      this.backPositionArray[i + 2] = this.randomRange(-60, 60);
+      //백그라운드 컬러색상 지정
       this.backColor[i] = this.randomRange(0.1, 0.5);
       this.backColor[i + 1] = this.randomRange(0.1, 0.5);
       this.backColor[i + 2] = this.randomRange(0.1, 0.5);
     }
 
     const particleBackgroundGeometry = new THREE.BufferGeometry();
-
+    //백그라운드의 포지션 및 색상값 추가
     particleBackgroundGeometry.setAttribute(
       "position",
       new THREE.Float32BufferAttribute(this.backPositionArray, 3)
@@ -143,7 +175,7 @@ export default class Three {
     );
 
     this.particleBackgroundMaterial = new THREE.PointsMaterial({
-      size: 0.08,
+      size: 0.15,
       vertexColors: true,
       transparent: true,
       depthTest: true,
@@ -158,78 +190,504 @@ export default class Three {
     this.particleBackground.position.z = 15;
     this.scene.add(this.particleBackground);
   }
-  createParticlesPosition(mesh, length) {
-    const sampler = new MeshSurfaceSampler(mesh);
-    const position = new THREE.Vector3();
-    const positions = [];
-    sampler.build();
-    for (let i = 0; i < length; i++) {
-      sampler.sample(position);
-      positions.push(position.x, position.y, position.z);
-    }
 
-    return positions;
-  }
+  scrollEvent() {
+    this.infinityRotation = false;
+    this.isReverse = false;
+    let mm = gsap.matchMedia();
+    const heroAnimation = (endMultiplier) => {
+      gsap
+        .timeline({
+          smoothChildTiming: true,
+          scrollTrigger: {
+            trigger: ".hero",
+            scrub: 0.2,
+            pin: true,
+            start: "5% top",
+            end: `+=${window.innerHeight * endMultiplier}px`,
+            immediateRender: false,
+          },
+        })
+        // hero 텍스트 애니메이션션
+        .to(
+          ".hero h1",
+          {
+            translateY: -window.innerHeight,
+            opacity: 0,
+          },
+          0
+        )
+        .to(
+          ".hero .sub",
+          {
+            translateY: window.innerHeight,
+            opacity: 0,
+          },
+          0
+        )
+        .to(
+          this.mesh.rotation,
+          {
+            y: THREE.MathUtils.degToRad(720),
+            duration: 3,
+          },
+          0
+        )
+        //로켓을 45도 기울이고 발사사
+        .to(this.wrapper.rotation, { z: THREE.MathUtils.degToRad(45) }, 0)
+        .to(this.mesh.position, { y: -4 }, 0.5)
+        .to(
+          this.mesh.position,
+          {
+            y: 50,
+          },
+          1
+        )
+        //투명상태로 원상복구
+        .to(
+          this.shaderMaterial.uniforms.u_opacity,
+          { value: 0, duration: 0.1 },
+          1.5
+        )
 
-  scollEvent() {
-    const bloomControl = { intensity: 2 };
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".wrap",
-        scrub: 2,
-        start: "top top",
-        end: "bottom bottom", //
-        markers: true,
-      },
+        .to(this.mesh.position, { y: 0 }, 1.5)
+        .to(this.wrapper.rotation, { z: THREE.MathUtils.degToRad(0) }, 1.5)
+        //투명상태가 1로돌아오면서 행성으로 변환환
+
+        // .to(this.camera.position, { z: 20, duration: 2 }, 2)
+
+        .to(
+          this.shaderMaterial.uniforms.u_morphTargetInfluences.value,
+          {
+            ...morphTarget("행성"),
+            duration: 2,
+            ease: "power4.inout",
+            onComplete: () => {
+              this.infinityRotation = true;
+              this.isReverse = true;
+            },
+            onReverseComplete: () => {
+              this.infinityRotation = false;
+              this.isReverse = false;
+            },
+          },
+
+          2
+        )
+        .to(
+          this.shaderMaterial.uniforms.u_opacity,
+          { value: 1, duration: 0.4 },
+          2.5
+        )
+        .to(
+          this.mesh.rotation,
+          {
+            x: THREE.MathUtils.degToRad(15),
+            y: THREE.MathUtils.degToRad(0),
+            duration: 2,
+          },
+          2.5
+        );
+    };
+    const projectAnimation = (endMultiplier) =>
+      gsap
+        .timeline({
+          smoothChildTiming: true,
+          scrollTrigger: {
+            trigger: ".project",
+            scrub: 0.2,
+            start: "top top",
+            pin: true,
+            end: `+=${window.innerHeight * endMultiplier}px`,
+            immediateRender: false,
+          },
+        })
+        //카메라를 z10으로 이동 후 카드 나열
+        .to(
+          this.camera.position,
+          {
+            z: 10,
+            ease: "power4.inout",
+            duration: 1,
+          },
+          0
+        )
+
+        .to(
+          ".project_list > li",
+          {
+            opacity: 1,
+            translateZ: -50,
+            duration: 1,
+            ease: "none",
+            stagger: (index) => {
+              return index * 2;
+            },
+          },
+          0
+        )
+        .to(
+          ".project_list > li",
+          {
+            opacity: 0,
+            xPercent: (index) => {
+              if (index % 2 === 0) {
+                return 250;
+              }
+              return -250;
+            },
+            yPercent: -250,
+            rotate: (index) => {
+              if (index % 2 === 0) {
+                return 350;
+              }
+              return -350;
+            },
+            duration: 1,
+            ease: "power4.inout",
+            stagger: (index) => {
+              return index * 2;
+            },
+          },
+          2
+        )
+        .to(this.shaderMaterial.uniforms.u_morphTargetInfluences.value, {
+          ...morphTarget("벛꽃"),
+          duration: 3,
+          ease: "none",
+        })
+        .to(
+          this.bloomEffect,
+          {
+            intensity: 2,
+            ease: "none",
+            duration: 3,
+          },
+          "<"
+        )
+        .to(
+          this.mesh.rotation,
+          {
+            x: THREE.MathUtils.degToRad(0),
+            duration: 3,
+            ease: "none",
+          },
+          "<"
+        )
+
+        .to(
+          this.camera.position,
+          {
+            z: 0,
+            duration: 3,
+            ease: "none",
+          },
+          "<"
+        )
+
+        .to(
+          this.shaderMaterial.uniforms.u_scale,
+          {
+            value: 2,
+            ease: "none",
+            duration: 3,
+          },
+          "<"
+        );
+
+    const introduceAnimaion = (endMultiplier) => {
+      gsap
+        .timeline({
+          smoothChildTiming: true,
+          scrollTrigger: {
+            trigger: ".introduce",
+            scrub: 0.2,
+            start: "top top",
+            end: `+=${window.innerHeight * endMultiplier}px`,
+            pin: true,
+            immediateRender: false,
+          },
+        })
+        .from(
+          ".self .text_in1",
+          {
+            opacity: 0,
+            ease: "power4.inout",
+            duration: 1,
+            xPercent: -20,
+          },
+          0
+        )
+        .from(
+          ".self .text_in2 p:first-child",
+          {
+            opacity: 0,
+            ease: "power4.inout",
+            duration: 1,
+            xPercent: 20,
+          },
+          0
+        )
+        .to(
+          ".self .text_in2 p:first-child",
+          {
+            ease: "none",
+            duration: 1,
+            yPercent: -100,
+          },
+          1
+        )
+        .to(
+          ".self .text_in2 p:last-child",
+          {
+            opacity: 1,
+            ease: "none",
+            duration: 1,
+            yPercent: -100,
+          },
+          1
+        )
+        .to(
+          ".self .text_in2",
+          {
+            opacity: 1,
+            duration: 1,
+            ease: "none",
+          },
+          2
+        )
+        .to(
+          ".self .text_1",
+          {
+            opacity: 0,
+            duration: 1,
+            ease: "none",
+          },
+          3
+        )
+        .from(
+          ".self p.text_2",
+          {
+            opacity: 0,
+            ease: "none",
+            duration: 1,
+            yPercent: -70,
+          },
+          4
+        )
+        .to(
+          ".self p.text_2",
+          {
+            opacity: 0,
+            ease: "none",
+            duration: 1,
+            yPercent: 20,
+          },
+          5
+        )
+        .from(
+          ".self p.text_3",
+          {
+            opacity: 0,
+            ease: "none",
+            duration: 1,
+            yPercent: 20,
+          },
+          6
+        )
+        .to(
+          ".self p.text_3",
+          {
+            opacity: 0,
+            ease: "none",
+            duration: 1,
+            xPercent: 20,
+          },
+          7
+        )
+        .from(
+          ".self p.text_4",
+          {
+            opacity: 0,
+            ease: "none",
+            duration: 1,
+            xPercent: 20,
+          },
+          8
+        )
+        .to(
+          ".self p.text_4",
+          {
+            opacity: 0,
+            ease: "none",
+            duration: 1,
+            xPercent: -20,
+          },
+          9
+        )
+        .from(
+          ".self p.text_5",
+          {
+            opacity: 0,
+            ease: "none",
+            duration: 1,
+            xPercent: -20,
+          },
+          10
+        )
+        .to(
+          ".self p.text_5",
+          {
+            opacity: 0,
+            ease: "none",
+            duration: 1,
+            xPercent: 20,
+            onComplete: () => {
+              gsap.to(".self .intro_section", {
+                visibility: "hidden",
+              });
+            },
+            onReverseComplete: () => {
+              gsap.to(".self .intro_section", {
+                visibility: "visible",
+              });
+            },
+          },
+          11
+        )
+        .to(
+          this.camera.position,
+          {
+            z: 30,
+            ease: "none",
+            duration: 2,
+          },
+          12
+        )
+        .to(
+          this.shaderMaterial.uniforms.u_morphTargetInfluences.value,
+          {
+            ...morphTarget("사람"),
+            duration: 2,
+            ease: "none",
+          },
+          13
+        )
+
+        .to(
+          this.bloomEffect,
+          {
+            intensity: 0.1,
+            ease: "none",
+            duration: 2,
+          },
+          13
+        )
+        .to(
+          this.shaderMaterial.uniforms.u_scale,
+          {
+            value: 0.5,
+            ease: "none",
+            duration: 2,
+          },
+          13
+        )
+
+        .to(
+          ".self .skills_section",
+          {
+            translateZ: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "none",
+          },
+          15
+        )
+        .to(
+          this.bloomEffect,
+          {
+            intensity: 1,
+            ease: "none",
+            duration: 4,
+          },
+          15
+        )
+        .to(
+          ".self .skills_section",
+          {
+            translateZ: 100,
+            opacity: 0,
+            duration: 1,
+            ease: "none",
+            onComplete: () => {
+              gsap.to(".self", {
+                visibility: "hidden",
+              });
+            },
+            onReverseComplete: () => {
+              gsap.to(".self", {
+                visibility: "visible",
+              });
+            },
+          },
+          17
+        )
+        .from(
+          ".resume > ul",
+          {
+            xPercent: 120,
+
+            duration: 4,
+            ease: "none",
+          },
+          19
+        )
+        .to(
+          {},
+          {
+            duration: 2,
+          }
+        );
+    };
+    const contactAnimaion = () => {
+      gsap
+        .timeline({
+          smoothChildTiming: true,
+          scrollTrigger: {
+            trigger: ".contact",
+            scrub: 0.2,
+            end: "bottom bottom",
+            immediateRender: false,
+          },
+        })
+        .to(this.shaderMaterial.uniforms.u_morphTargetInfluences.value, {
+          ...morphTarget("수화기"),
+          duration: 2,
+          ease: "none",
+        })
+        .to(
+          this.mesh.position,
+          {
+            x: 5,
+            y: -5,
+            duration: 2,
+            ease: "none",
+          },
+          "<"
+        );
+    };
+
+    mm.add("(max-width:768px)", () => {
+      heroAnimation(8);
+      projectAnimation(16);
+      introduceAnimaion(16);
+      contactAnimaion();
     });
-
-    tl.to(this.mesh.material.uniforms.u_morphTargetInfluences.value, {
-      0: 1,
-      1: 0,
-      2: 0,
-      3: 0, // 목표 값
-      duration: 1, // 지속 시간
-      ease: "power4.inOut", // 이징 (선택사항)
-    })
-      .to(
-        this.mesh.rotation,
-        {
-          y: Math.PI,
-          duration: 1,
-        },
-        "-=1"
-      )
-      .to(
-        this.mesh.material.uniforms.u_morphTargetInfluences.value,
-        [0, 1, 0, 0]
-      )
-      .to(
-        this.mesh.rotation,
-        {
-          y: Math.PI * 2,
-          duration: 1,
-        },
-        "-=1"
-      )
-      // .to(
-      //   bloomControl,
-      //   {
-      //     intensity: 6,
-      //     duration: 1,
-      //     onUpdate: () => {
-      //       this.bloomEffect.intensity = bloomControl.intensity;
-      //     },
-      //   },
-      //   "<"
-      // )
-
-      .to(
-        this.mesh.material.uniforms.u_morphTargetInfluences.value,
-        [0, 0, 1, 0]
-      );
-
-    window.addEventListener("scroll", () => {
-      console.log(this.mesh.material.uniforms.u_morphTargetInfluences.value);
+    mm.add("(min-width:769px)", () => {
+      heroAnimation(4);
+      projectAnimation(8);
+      introduceAnimaion(8);
+      contactAnimaion();
     });
   }
   async setupModels() {
@@ -238,19 +696,22 @@ export default class Three {
     draco.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
 
     loader.setDRACOLoader(draco);
-
+    // 모델 로딩
     Promise.all([
-      loader.loadAsync("/model/notebook.glb"),
+      loader.loadAsync("/model/man.glb"),
       loader.loadAsync("/model/roket.glb"),
-      loader.loadAsync("/model/rocket2.glb"),
+      loader.loadAsync("/model/saturnplanet.glb"),
+      loader.loadAsync("/model/telephone.glb"),
     ]).then(async (results) => {
       const bufferGeometry = new THREE.BufferGeometry();
-      const [notebook, rocket, rocket2] = results;
+      const [man, rocket, saturn, telephone] = results;
+      //모델들 중앙정렬
       results.forEach((result) => {
         this.centerdModels(result.scene);
       });
-      const notebookPositions = new CreateParticlePositions(
-        notebook,
+      //파티클 생성성
+      const manPositions = new CreateParticlePositions(
+        man,
         10000
       ).createParticles();
       const rocketPositions = new CreateParticlePositions(
@@ -258,118 +719,67 @@ export default class Three {
         10000
       ).createParticles();
 
-      const rocket2Positions = new CreateParticlePositions(
-        rocket2,
+      const saturnPositions = new CreateParticlePositions(
+        saturn,
+        10000
+      ).createParticles();
+      const telephonePositions = new CreateParticlePositions(
+        telephone,
         10000
       ).createParticles();
 
+      //shaderMaterial 생성
       this.shaderMaterial = new THREE.ShaderMaterial({
         uniforms: {
           uTime: { value: 0 },
+          u_scale: { value: 0.5 },
+          u_opacity: { value: 1 },
           u_morphTargetInfluences: { value: [0, 0, 0, 0] },
         },
+        side: THREE.DoubleSide,
         vertexShader: vertex,
         fragmentShader: fragment,
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
       });
+
+      //파티클 위치 데이터값 추가
       bufferGeometry.setAttribute(
         "position",
-        new THREE.Float32BufferAttribute(notebookPositions, 3)
-      );
-      bufferGeometry.setAttribute(
-        "morphTarget0",
-        new THREE.Float32BufferAttribute(rocket2Positions, 3)
+        new THREE.Float32BufferAttribute(rocketPositions, 3)
       );
       bufferGeometry.setAttribute(
         "morphTarget1",
-        new THREE.Float32BufferAttribute(notebookPositions, 3)
+        new THREE.Float32BufferAttribute(manPositions, 3)
       );
       bufferGeometry.setAttribute(
         "morphTarget2",
-        new THREE.Float32BufferAttribute(rocketPositions, 3)
+        new THREE.Float32BufferAttribute(saturnPositions, 3)
+      );
+      bufferGeometry.setAttribute(
+        "morphTarget3",
+        new THREE.Float32BufferAttribute(telephonePositions, 3)
       );
       this.mesh = new THREE.Points(bufferGeometry, this.shaderMaterial);
-      const wrapper = new THREE.Object3D();
-      wrapper.add(this.mesh);
-      this.scene.add(this.mesh);
+      /**
+       * warpper를 생성하고 mesh를 추가 한 후 wapper를 scene에 추가한 이유는
+       *mesh에 rotation적용한 후 다른방향으로 재적용 시 mesh기준의 회전축이 아닌 화면 기준의 회전축에 적용되므로
+       *warpper를 추가하여 mesh의 회전축을 유지할 수 있도록 하기위함
+       */
+      this.wrapper = new THREE.Object3D();
+      this.wrapper.add(this.mesh);
+      this.scene.add(this.wrapper);
 
-      const tl = gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: ".wrap",
-            scrub: 2,
-            start: "top top",
-            end: "bottom bottom",
-            markers: true,
-          },
-        })
-        .to(this.mesh.material.uniforms.u_morphTargetInfluences.value, {
-          0: 1,
-          1: 0,
-          2: 0,
-          3: 0, // 목표 값
-          duration: 1, // 지속 시간
-          ease: "power4.inOut", // 이징 (선택사항)
-        })
-        .to(this.mesh.material.uniforms.u_morphTargetInfluences.value, {
-          0: 0,
-          1: 1,
-          2: 0,
-          3: 0, // 목표 값
-          duration: 1, // 지속 시간
-          ease: "power4.inOut", // 이징 (선택사항)
-        })
-        .to(this.mesh.material.uniforms.u_morphTargetInfluences.value, {
-          0: 0,
-          1: 0,
-          2: 1,
-          3: 0, // 목표 값
-          duration: 1, // 지속 시간
-          ease: "power4.inOut", // 이징 (선택사항)
-        })
-        .to(this.mesh.material.uniforms.u_morphTargetInfluences.value, {
-          0: 0,
-          1: 0,
-          2: 0,
-          3: 1, // 목표 값
-          duration: 1, // 지속 시간
-          ease: "power4.inOut", // 이징 (선택사항)
-        })
-        // 🚀 1단계: 45도 기울이기
-        .to(wrapper.rotation, {
-          z: Math.PI / 4,
-          duration: 1,
-          ease: "power2.out",
-        })
-        .to(this.mesh.rotation, {
-          y: Math.PI * 4,
-          duration: 1.5,
-          ease: "none",
-        })
-        .to(
-          this.mesh.position,
-          {
-            y: -10,
-            duration: 0.5,
-            ease: "none",
-          },
-          "<+0.5"
-        )
-        .to(
-          this.mesh.position,
-          {
-            y: 100,
-            duration: 0.5,
-            ease: "none",
-          },
-          ">"
-        );
+      this.scrollEvent();
     });
   }
   centerdModels(gltfScene) {
+    // 모델 전체를 감싸는 최대, 최소 좌표 생성성
     const box = new THREE.Box3().setFromObject(gltfScene);
     const center = new THREE.Vector3();
     box.getCenter(center);
-
+    //현재 모델의 중심점 좌표 - 모델기준으로 생성된 중심점좌표표 = 0,0,0이므로 중앙정렬
     gltfScene.position.sub(center);
   }
 
@@ -392,15 +802,15 @@ export default class Three {
   }
 
   resize() {
-    const width = this.container.clientWidth;
-    const height = this.container.clientHeight;
+    this.width = this.container.clientWidth;
+    this.height = this.container.clientHeight;
     const camera = this.camera;
     if (camera) {
-      camera.aspect = width / height;
+      camera.aspect = this.width / this.height;
       camera.updateProjectionMatrix();
     }
-    this.renderer.setSize(width, height);
-    this.composer.setSize(width, height);
+    this.renderer.setSize(this.width, this.height);
+    this.composer.setSize(this.width, this.height);
   }
   setupEvent() {
     window.onresize = this.resize.bind(this);
@@ -418,12 +828,12 @@ export default class Three {
     this.camera.rotation.y = THREE.MathUtils.lerp(
       this.camera.rotation.y,
       this.mouse.x * Math.PI * 0.00001,
-      1
+      0.1
     );
     this.camera.rotation.x = THREE.MathUtils.lerp(
       this.camera.rotation.x,
       this.mouse.y * Math.PI * 0.00001,
-      1
+      0.1
     );
   }
 
@@ -441,20 +851,15 @@ export default class Three {
     if (progressMessage && message) {
       progressMessage.textContent = message;
     }
-
-    console.log(`진행률: ${progress}% - ${message}`);
   }
 
   hideLoadingScreen() {
     const loadingScreen = document.querySelector(".loading_screen");
     const mainContent = document.getElementById(".wrap");
 
-    console.log("로딩 완료! 화면 표시...");
-
     if (loadingScreen) {
       setTimeout(() => {
         loadingScreen.classList.add("loaded");
-        heroIntroAnimaion();
       }, 1000);
     }
 
@@ -487,6 +892,9 @@ export default class Three {
       this.particleBackground.rotation.y = time * 0.1;
       this.particleBackground.rotation.z = time * 0.01;
     }
+    if (this.infinityRotation) {
+      this.mesh.rotation.y = time * (this.isReverse ? -0.1 : 0.1);
+    }
   }
   render(time) {
     this.update(time);
@@ -497,168 +905,11 @@ export default class Three {
 
 // DOM 완료 후 시작
 document.addEventListener("DOMContentLoaded", () => {
+  window.outerHeight = window.screen.availHeight;
+  const lenis = new Lenis();
+  lenis.on("scroll", ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+
   new Three();
 });
-
-class CreateParticlePositions {
-  constructor(mesh, count) {
-    this.mesh = mesh;
-    this.count = count;
-    this.targetSize = 20;
-    this.particleDensity = 200; // 🎯 단위 면적당 파티클 수
-    /**
-     *
-     * [key:string] : number
-     *
-     */
-  }
-  createParticles() {
-    let allMesh = [];
-    let positions = [];
-
-    this.mesh.scene.traverse((child) => {
-      if (child.isMesh) {
-        allMesh.push(child);
-      }
-    });
-    const particleDistribution = this.calculateParticleDistribution(
-      allMesh,
-      this.count
-    );
-
-    allMesh.forEach((mesh, index) => {
-      const sampler = new MeshSurfaceSampler(mesh);
-
-      const vector = new THREE.Vector3();
-      sampler.build();
-      let meshParticleCount;
-      meshParticleCount = particleDistribution[index];
-
-      for (let i = 0; i < meshParticleCount; i++) {
-        sampler.sample(vector);
-        mesh.localToWorld(vector);
-        positions.push(vector.x, vector.y, vector.z);
-      }
-    });
-    return this.normalizePositions(positions);
-  }
-  normalizePositions(positions) {
-    console.log(positions);
-    if (positions.length === 0) return positions;
-
-    // 바운딩 박스 계산
-    let minX = Infinity,
-      maxX = -Infinity;
-    let minY = Infinity,
-      maxY = -Infinity;
-    let minZ = Infinity,
-      maxZ = -Infinity;
-
-    for (let i = 0; i < positions.length; i += 3) {
-      minX = Math.min(minX, positions[i]);
-      maxX = Math.max(maxX, positions[i]);
-      minY = Math.min(minY, positions[i + 1]);
-      maxY = Math.max(maxY, positions[i + 1]);
-      minZ = Math.min(minZ, positions[i + 2]);
-      maxZ = Math.max(maxZ, positions[i + 2]);
-    }
-
-    // 중심점과 크기 계산
-    const centerX = (minX + maxX) / 2;
-    const centerY = (minY + maxY) / 2;
-    const centerZ = (minZ + maxZ) / 2;
-
-    const sizeX = maxX - minX;
-    const sizeY = maxY - minY;
-    const sizeZ = maxZ - minZ;
-    const maxSize = Math.max(sizeX, sizeY, sizeZ);
-
-    // 스케일 계산
-    const scale = this.targetSize / maxSize;
-
-    // 정규화 적용
-    for (let i = 0; i < positions.length; i += 3) {
-      positions[i] = (positions[i] - centerX) * scale;
-      positions[i + 1] = (positions[i + 1] - centerY) * scale;
-      positions[i + 2] = (positions[i + 2] - centerZ) * scale;
-    }
-
-    console.log(`Model normalized: ${maxSize.toFixed(2)} → ${this.targetSize}`);
-    console.log(positions);
-    return positions;
-  }
-  calculateParticleDistribution(allMesh, totalCount) {
-    // 1단계: 각 메시의 부피 계산
-    const meshVolumes = allMesh.map((mesh) => this.calculateMeshVolume(mesh));
-    const totalVolume = meshVolumes.reduce((sum, volume) => sum + volume, 0);
-
-    console.log("=== Volume Analysis ===");
-    allMesh.forEach((mesh, i) => {
-      console.log(`${mesh.name}: volume=${meshVolumes[i].toFixed(4)}`);
-    });
-    console.log(`Total volume: ${totalVolume.toFixed(4)}`);
-
-    // 2단계: 부피 비례로 파티클 분배
-    let distribution = meshVolumes.map((volume) => {
-      const ratio = volume / totalVolume;
-      const particles = Math.max(Math.round(totalCount * ratio), 10); // 최소 10개
-      return particles;
-    });
-
-    // 3단계: 총합 정확히 맞추기
-    const currentTotal = distribution.reduce((sum, count) => sum + count, 0);
-    const diff = totalCount - currentTotal;
-
-    if (diff !== 0) {
-      // 가장 큰 부피의 메시에서 조정
-      const maxVolumeIndex = meshVolumes.indexOf(Math.max(...meshVolumes));
-      distribution[maxVolumeIndex] = Math.max(
-        distribution[maxVolumeIndex] + diff,
-        10
-      );
-    }
-
-    console.log("=== Particle Distribution ===");
-    allMesh.forEach((mesh, i) => {
-      const ratio = ((distribution[i] / totalCount) * 100).toFixed(1);
-      console.log(`${mesh.name}: ${distribution[i]} particles (${ratio}%)`);
-    });
-
-    return distribution;
-  }
-  calculateMeshVolume(mesh) {
-    const geometry = mesh.geometry;
-
-    if (!geometry || !geometry.attributes.position) {
-      return 1;
-    }
-
-    // 바운딩 박스 기반 부피
-    geometry.computeBoundingBox();
-    const box = geometry.boundingBox;
-
-    const width = box.max.x - box.min.x;
-    const height = box.max.y - box.min.y;
-    const depth = box.max.z - box.min.z;
-
-    const volume = width * height * depth;
-
-    // 🎯 특별한 조정 (필요시)
-    let adjustedVolume = volume;
-
-    // 너무 얇은 부품은 페널티
-    const minThickness = Math.min(width, height, depth);
-    if (minThickness < 0.5) {
-      adjustedVolume *= 0.5; // 50% 감소
-    }
-
-    // 메시 이름 기반 조정
-    if (mesh.name.includes("Circle_Bahan001")) {
-      adjustedVolume *= 1.5; // 메인 몸통 강화
-    } else if (mesh.name.includes("Cube")) {
-      adjustedVolume *= 0.3; // 날개 약화
-    }
-
-    return Math.max(adjustedVolume, 0.1); // 최소값 보장
-  }
-}
