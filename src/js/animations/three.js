@@ -181,7 +181,7 @@ export default class Three {
       depthTest: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
-      map: new THREE.TextureLoader().load("/images/circle.png"),
+      map: new THREE.TextureLoader().load("./images/circle.png"),
     });
     this.particleBackground = new THREE.Points(
       particleBackgroundGeometry,
@@ -698,10 +698,10 @@ export default class Three {
     loader.setDRACOLoader(draco);
     // 모델 로딩
     Promise.all([
-      loader.loadAsync("/model/man.glb"),
-      loader.loadAsync("/model/roket.glb"),
-      loader.loadAsync("/model/saturnplanet.glb"),
-      loader.loadAsync("/model/telephone.glb"),
+      loader.loadAsync("./model/man.glb"),
+      loader.loadAsync("./model/roket.glb"),
+      loader.loadAsync("./model/saturnplanet.glb"),
+      loader.loadAsync("./model/telephone.glb"),
     ]).then(async (results) => {
       const bufferGeometry = new THREE.BufferGeometry();
       const [man, rocket, saturn, telephone] = results;
