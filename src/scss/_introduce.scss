@@ -3,7 +3,6 @@
 .introduce {
   width: 100%;
   min-height: 100dvh;
-  overflow: hidden;
 
   display: flex;
   justify-content: center;
@@ -13,6 +12,7 @@
   .container {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
   .content {
@@ -27,7 +27,6 @@
   width: 100%;
   height: 100%;
   perspective: 1000px;
-  transform-style: preserve-3d;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -39,6 +38,7 @@
 
   .intro_section {
     position: relative;
+
     h3 {
       font-size: variables.$fs-200;
       color: variables.$cl-blue;
@@ -96,6 +96,7 @@
     transform: translate3d(-50%, -50%, -1000px);
     opacity: 0;
     position: absolute;
+
     top: 50%;
     left: 50%;
     width: 90vw;
@@ -113,8 +114,6 @@
     }
 
     .skills_grid {
-      //   display: grid;
-      //   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
@@ -126,15 +125,14 @@
         color: variables.$cl-white;
         border: 1px solid variables.$cl-skyblue;
         font-size: variables.$fs-250;
-        backdrop-filter: blur(20px);
-        background-color: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.3);
         padding: 1rem;
         border-radius: 8px;
         text-align: center;
         font-size: variables.$fs-250;
         font-weight: 500;
         position: relative;
-        overflow: hidden;
       }
     }
   }
@@ -149,7 +147,6 @@
 .resume {
   width: 100%;
   perspective: 1000px;
-  transform-style: preserve-3d;
   position: relative;
   overflow: hidden;
   padding: 0 max(1.6rem, min(10rem, 4vw));
@@ -193,20 +190,11 @@
         position: relative;
         width: 100%;
         height: 100%;
-        transform-style: preserve-3d;
         transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         cursor: pointer;
 
-        &.flipped {
-          transform: rotateY(180deg);
-        }
-
         &:hover {
           transform: translateY(-8px);
-
-          &.flipped {
-            transform: translateY(-8px) rotateY(180deg);
-          }
         }
       }
 
@@ -224,12 +212,10 @@
         transition: all 0.3s ease;
       }
 
-      // 앞면 스타일
       .card_front {
         border-left: 3px solid variables.$cl-blue;
       }
 
-      // 카드 헤더
       .card_header {
         margin-bottom: 1.5rem;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -283,13 +269,6 @@
             font-size: variables.$fs-200;
             font-weight: 500;
             color: rgba(255, 255, 255, 0.8);
-            transition: all 0.3s ease;
-
-            &:hover {
-              background: rgba(102, 126, 234, 0.2);
-              border-color: variables.$cl-blue;
-              color: white;
-            }
           }
         }
 
@@ -323,14 +302,6 @@
               line-height: 1.5;
 
               position: relative;
-
-              //   &:before {
-              //     content: "▸";
-              //     position: absolute;
-              //     left: 0;
-              //     color: variables.$cl-blue;
-              //     font-size: variables.$fs-200;
-              //   }
 
               span {
                 display: none; // 기존 ● 숨김

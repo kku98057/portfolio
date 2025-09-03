@@ -195,13 +195,14 @@ export default class Three {
     this.infinityRotation = false;
     this.isReverse = false;
     let mm = gsap.matchMedia();
+
     const heroAnimation = (endMultiplier) => {
       gsap
         .timeline({
           smoothChildTiming: true,
           scrollTrigger: {
             trigger: ".hero",
-            scrub: 0.2,
+            scrub: true,
             pin: true,
             start: "5% top",
             end: `+=${window.innerHeight * endMultiplier}px`,
@@ -289,13 +290,13 @@ export default class Three {
           2.5
         );
     };
-    const projectAnimation = (endMultiplier) =>
+    const projectAnimation = (endMultiplier) => {
       gsap
         .timeline({
           smoothChildTiming: true,
           scrollTrigger: {
             trigger: ".project",
-            scrub: 0.2,
+            scrub: true,
             start: "top top",
             pin: true,
             end: `+=${window.innerHeight * endMultiplier}px`,
@@ -394,6 +395,7 @@ export default class Three {
           },
           "<"
         );
+    };
 
     const introduceAnimaion = (endMultiplier) => {
       gsap
@@ -401,7 +403,7 @@ export default class Three {
           smoothChildTiming: true,
           scrollTrigger: {
             trigger: ".introduce",
-            scrub: 0.2,
+            scrub: true,
             start: "top top",
             end: `+=${window.innerHeight * endMultiplier}px`,
             pin: true,
@@ -655,7 +657,7 @@ export default class Three {
           smoothChildTiming: true,
           scrollTrigger: {
             trigger: ".contact",
-            scrub: 0.2,
+            scrub: true,
             end: "bottom bottom",
             immediateRender: false,
           },
