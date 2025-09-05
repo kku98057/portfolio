@@ -89,6 +89,15 @@
           margin-bottom: 1rem;
           color: #fff;
           font-weight: 600;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          span {
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: variables.$fs-250;
+            padding: 0.25rem 0.75rem;
+          }
         }
 
         p {
